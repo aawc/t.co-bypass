@@ -20,4 +20,9 @@ Fairly self explanatory, but just in case, this package will replace t.co URLs o
 - install t.co-bypass.safariextz
 
 ##Internet Explorer
-- Anyone want to build this? 
+- Anyone want to build this?
+- IE7Pro works with the script - reported by @nhantrn
+
+#Contributors
+In no particular order (links are gittip.com)
+[@timdorr](https://www.gittip.com/timdorr/), [@tony-o](https://www.gittip.com/tony-o/), @tomsterritt, @shayel, @aawc, @CoreyH, @titanious, @bisho

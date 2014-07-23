@@ -3,17 +3,35 @@
 // @namespace   http://darcsys.com
 // @include     https://twitter.com/*
 // @include     https://tweetdeck.com/*
-// @require     http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
+// @include     https://tweetdeck.twitter.com/*
 // @version     1
 // @grant       none
 // ==/UserScript==
 
-$(document).bind('DOMSubtreeModified', function(){
-  $("a[data-touched!='true']").each(function(){
-    $(this).attr("data-touched", "true");
-    if($(this).attr("href").match("//t\.co/")){
-      $(this).attr("href", $(this).attr("data-expanded-url") != "" ? $(this).attr("data-expanded-url") : $(this).attr("title"));
+var observer = new MutationObserver(function(mutations) {
+  var aTags = document.body.getElementsByTagName("a");
+  for (var i = 0; i < aTags.length; i++) {
+    var tag = aTags[i];
+    
+    if (tag.getAttribute("class") !== null && tag.getAttribute("class").indexOf("twitter-atreply") > -1) {
+      continue;
     }
-  });
+
+    if (tag.href && tag.href.indexOf("://t.co/") > -1) {
+      if (tag.getAttribute("data-expanded-url") !== "" && tag.getAttribute("data-expanded-url") !== null) {
+        tag.href = tag.getAttribute("data-expanded-url");
+      } else if (tag.getAttribute("data-full-url") !== "" && tag.getAttribute("data-full-url") !== null) {
+        tag.href = tag.getAttribute("data-full-url");
+      } else {
+        tag.href = tag.getAttribute("title");
+      }
+    }
+  };
 });
 
+var config = { 
+  childList: true,
+  subtree: true
+};
+
+observer.observe(document.body, config);
